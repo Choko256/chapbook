@@ -1,7 +1,7 @@
 // Handles if, unless, and else modifiers.
 
 export default {
-	match: /^if(always|never)?\s|else$|unless\s/i,
+	match: /^if(always|never)?\s|elsif|else$|unless\s/i,
 	processRaw(output, {invocation, state}) {
 		const type = invocation.replace(/\s.*/, '').toLowerCase();
 		let condition;
@@ -35,6 +35,9 @@ export default {
 				}
 
 				state.conditionEval = !state.conditionEval;
+				break;
+			case 'elsif':
+				state.conditionEval = !state.conditionEval && condition.apply(window);
 				break;
 		}
 
