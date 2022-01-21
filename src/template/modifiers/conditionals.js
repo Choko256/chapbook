@@ -37,6 +37,11 @@ export default {
 				state.conditionEval = !state.conditionEval;
 				break;
 			case 'elsif':
+				if (state.conditionEval === undefined) {
+					throw new Error(
+						'There was no matching if modifier for an elsif modifier.'
+					);
+				}
 				state.conditionEval = !state.conditionEval && condition.apply(window);
 				break;
 		}
